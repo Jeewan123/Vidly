@@ -10,12 +10,14 @@
     <table class="table table-bordered">
         <thead>
         <th>Customers</th>
+        <th>MembershipType</th>
         </thead>
         <tbody>
         @foreach (var custom in Model)
         {
             <tr>
-                <td>@Html.ActionLink(custom.Name,"Details","Customers",new {id=custom.Id},null) </td>
+                <td>@Html.ActionLink(custom.Name,"Edit","Customers",new {id=custom.Id},null) </td>
+                <td>@custom.MembershipType.MembershipName</td>
             </tr>
         }
         </tbody>

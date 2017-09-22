@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -141,14 +147,73 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Context\MovieRentalContext.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709172242191_MovieRental.cs" />
+    <Compile Include="Migrations\201709172242191_MovieRental.Designer.cs">
+      <DependentUpon>201709172242191_MovieRental.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709172310236_PopulateMembershipType.cs" />
+    <Compile Include="Migrations\201709172310236_PopulateMembershipType.Designer.cs">
+      <DependentUpon>201709172310236_PopulateMembershipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709172334561_ApplyAnnotationToCustomerName.cs" />
+    <Compile Include="Migrations\201709172334561_ApplyAnnotationToCustomerName.Designer.cs">
+      <DependentUpon>201709172334561_ApplyAnnotationToCustomerName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709180016079_ChangeInCustomerModel.cs" />
+    <Compile Include="Migrations\201709180016079_ChangeInCustomerModel.Designer.cs">
+      <DependentUpon>201709180016079_ChangeInCustomerModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709180020385_ChangeInCustomerModel1.cs" />
+    <Compile Include="Migrations\201709180020385_ChangeInCustomerModel1.Designer.cs">
+      <DependentUpon>201709180020385_ChangeInCustomerModel1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709181912412_AddBirthDateToCustomer.cs" />
+    <Compile Include="Migrations\201709181912412_AddBirthDateToCustomer.Designer.cs">
+      <DependentUpon>201709181912412_AddBirthDateToCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709181941544_AddedGenreTable.cs" />
+    <Compile Include="Migrations\201709181941544_AddedGenreTable.Designer.cs">
+      <DependentUpon>201709181941544_AddedGenreTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709181945454_AddedGenreTable1.cs" />
+    <Compile Include="Migrations\201709181945454_AddedGenreTable1.Designer.cs">
+      <DependentUpon>201709181945454_AddedGenreTable1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709181951110_AddedGenreTableAndEditedcustomerTable.cs" />
+    <Compile Include="Migrations\201709181951110_AddedGenreTableAndEditedcustomerTable.Designer.cs">
+      <DependentUpon>201709181951110_AddedGenreTableAndEditedcustomerTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709181952473_PopulateGenreTable.cs" />
+    <Compile Include="Migrations\201709181952473_PopulateGenreTable.Designer.cs">
+      <DependentUpon>201709181952473_PopulateGenreTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709192225573_AddedIsSubscribedToNewsletter.cs" />
+    <Compile Include="Migrations\201709192225573_AddedIsSubscribedToNewsletter.Designer.cs">
+      <DependentUpon>201709192225573_AddedIsSubscribedToNewsletter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709210226522_DateChangedToNullable.cs" />
+    <Compile Include="Migrations\201709210226522_DateChangedToNullable.Designer.cs">
+      <DependentUpon>201709210226522_DateChangedToNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709220438255_AddedRequiredFeild.cs" />
+    <Compile Include="Migrations\201709220438255_AddedRequiredFeild.Designer.cs">
+      <DependentUpon>201709220438255_AddedRequiredFeild.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\MembershipType.cs" />
+    <Compile Include="Models\Min18YrsIfAMember.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\MovieViewModel.cs" />
+    <Compile Include="Models\NewCustomerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -193,9 +258,12 @@
     <Content Include="Views\Movies\Details.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Movies\MovieForm.cshtml" />
+    <Content Include="Views\Customers\CustomerForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\MembershipType\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -211,6 +279,47 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201709172242191_MovieRental.resx">
+      <DependentUpon>201709172242191_MovieRental.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709172310236_PopulateMembershipType.resx">
+      <DependentUpon>201709172310236_PopulateMembershipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709172334561_ApplyAnnotationToCustomerName.resx">
+      <DependentUpon>201709172334561_ApplyAnnotationToCustomerName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709180016079_ChangeInCustomerModel.resx">
+      <DependentUpon>201709180016079_ChangeInCustomerModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709180020385_ChangeInCustomerModel1.resx">
+      <DependentUpon>201709180020385_ChangeInCustomerModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709181912412_AddBirthDateToCustomer.resx">
+      <DependentUpon>201709181912412_AddBirthDateToCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709181941544_AddedGenreTable.resx">
+      <DependentUpon>201709181941544_AddedGenreTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709181945454_AddedGenreTable1.resx">
+      <DependentUpon>201709181945454_AddedGenreTable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709181951110_AddedGenreTableAndEditedcustomerTable.resx">
+      <DependentUpon>201709181951110_AddedGenreTableAndEditedcustomerTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709181952473_PopulateGenreTable.resx">
+      <DependentUpon>201709181952473_PopulateGenreTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709192225573_AddedIsSubscribedToNewsletter.resx">
+      <DependentUpon>201709192225573_AddedIsSubscribedToNewsletter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709210226522_DateChangedToNullable.resx">
+      <DependentUpon>201709210226522_DateChangedToNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709220438255_AddedRequiredFeild.resx">
+      <DependentUpon>201709220438255_AddedRequiredFeild.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
